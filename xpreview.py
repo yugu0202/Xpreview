@@ -7,7 +7,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from PIL import Image
 from io import BytesIO
-import chromedriver_binary
 import re
 import asyncio
 import time
@@ -37,7 +36,8 @@ JavaScriptIsLoadedImagesCall: str = "return isLoadedAllImages();"
 @bot.event
 async def on_ready() -> None:
     print(f'{bot.user.name} has connected to Discord!')
-    asyncio.ensure_future(get_tweet_image())
+    loop = asyncio.get_running_loop()
+    loop.create_task(get_tweet_image())
 
 @bot.event
 async def on_message(message: discord.Message) -> None:
