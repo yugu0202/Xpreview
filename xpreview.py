@@ -14,7 +14,6 @@ import time
 intents = discord.Intents.all()
 bot: commands.Bot = commands.Bot(command_prefix='!', intents=intents)
 
-analysis_queue: asyncio.Queue[[str, int, int]] = asyncio.Queue()
 
 # JavaScriptで、ページ内のすべての画像が読み込まれたかどうかを判定する関数を定義する
 JavaScriptIsLoadedImagesDefine: str = " \
@@ -36,6 +35,7 @@ JavaScriptIsLoadedImagesCall: str = "return isLoadedAllImages();"
 @bot.event
 async def on_ready() -> None:
     print(f'{bot.user.name} has connected to Discord!')
+    analysis_queue: asyncio.Queue[[str, int, int]] = asyncio.Queue()
     loop = asyncio.get_running_loop()
     loop.create_task(get_tweet_image())
 
