@@ -7,6 +7,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from PIL import Image
 from io import BytesIO
+import chromedriver_binary
 import re
 import asyncio
 import time
@@ -59,14 +60,18 @@ async def isLoadedAllImages(driver: webdriver.Chrome, timeOut: int = 300, interv
   completed: bool = False
   start: float = time.time()
   while time.time() - start < timeOut and completed == False:
-    completed = driver.execute_script(JavaScriptIsLoadedAllImagesCall)
+    completed = driver.execute_script(JavaScriptIsLoadedImagesCall)
     await asyncio.sleep(interval)
   return completed
 
 async def get_tweet_image() -> None:
     service = Service()
     options: webdriver.FirefoxOptions = webdriver.ChromeOptions()
-    options.headless = True
+    options.add_argument('--headless')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-gpu')  # 暫定的に必要なフラグとのこと
+    options.add_argument('--window-size=1980x1020')  # ウィンドウサイズを指定
+    options.add_argument('--lang=ja-JP')
 
     driver: webdriver.Chrome = webdriver.Chrome(service=service, options=options)
 
@@ -77,7 +82,7 @@ async def get_tweet_image() -> None:
         message: discord.Message = await bot.get_channel(channel_id).fetch_message(message_id)
 
         driver.get(url)
-        driver.execute_script(JavaScriptIsLoadedAllImagesDefine)
+        driver.execute_script(JavaScriptIsLoadedImagesDefine)
 
         try:
             # ツイートの要素が表示されるまで待機する
