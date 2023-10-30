@@ -36,8 +36,6 @@ JavaScriptIsLoadedImagesCall: str = "return isLoadedAllImages();"
 @bot.event
 async def on_ready() -> None:
     print(f'{bot.user.name} has connected to Discord!')
-    loop = asyncio.get_running_loop()
-    loop.create_task(get_tweet_image())
 
 @bot.event
 async def on_message(message: discord.Message) -> None:
@@ -112,3 +110,4 @@ async def get_tweet_image() -> None:
             await message.add_files(file)
 
 bot.run('MTE2ODYwMDE4MTQ0NTUwOTE2MA.GLmMbm.U4GVb3o2BB_RFxJ8BFDcngWZIIP1Tx9tmyjBSQ')
+asyncio.run(get_tweet_image())
