@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "xpreview"
+version = "0.1.0"
+description = "X add discord preview"
+authors = ["yugu-0202 <applerin1119@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+discord = "^2.3.2"
+beautifulsoup4 = "^4.12.2"
+requests = "^2.31.0"
+imgkit = "^1.2.3"
+selenium = "^4.14.0"
+pillow = "^10.1.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
