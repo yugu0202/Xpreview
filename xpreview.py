@@ -54,7 +54,7 @@ async def on_message(message: discord.Message) -> None:
 
     await bot.process_commands(message)
 
-async def isLoadedAllImages(driver: webdriver.Firefox, timeOut: int = 300, interval: float = 0.1) -> bool:
+async def isLoadedAllImages(driver: webdriver.Chrome, timeOut: int = 300, interval: float = 0.1) -> bool:
   completed: bool = False
   start: float = time.time()
   while time.time() - start < timeOut and completed == False:
@@ -63,10 +63,10 @@ async def isLoadedAllImages(driver: webdriver.Firefox, timeOut: int = 300, inter
   return completed
 
 async def get_tweet_image() -> None:
-    options: webdriver.FirefoxOptions = webdriver.FirefoxOptions()
+    options: webdriver.FirefoxOptions = webdriver.ChromeOptions()
     options.headless = True
 
-    driver: webdriver.Firefox = webdriver.Firefox(options=options)
+    driver: webdriver.Firefox = webdriver.Chrome(options=options)
 
     wait: WebDriverWait = WebDriverWait(driver, 10)  # wait up to 10 seconds for elements to appear
 
