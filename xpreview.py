@@ -65,7 +65,7 @@ async def isLoadedAllImages(driver: webdriver.Chrome, timeOut: int = 300, interv
   return completed
 
 async def get_tweet_image() -> None:
-    service = Service()
+    service = Service('./chromedriver-linux64/chromedriver')
     options: webdriver.FirefoxOptions = webdriver.ChromeOptions()
     options.add_argument('--headless')
     options.add_argument('--no-sandbox')
