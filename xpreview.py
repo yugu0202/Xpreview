@@ -72,6 +72,7 @@ async def get_tweet_image() -> None:
     options.add_argument('--disable-gpu')  # 暫定的に必要なフラグとのこと
     options.add_argument('--window-size=1980x1020')  # ウィンドウサイズを指定
     options.add_argument('--lang=ja-JP')
+    options.add_experimental_option('prefs', {'intl.accept_languages': 'ja'})
 
     driver: webdriver.Chrome = webdriver.Chrome(service=service, options=options)
 
