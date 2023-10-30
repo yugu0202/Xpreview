@@ -18,7 +18,7 @@ analysis_queue: asyncio.Queue[[str, int, int]] = asyncio.Queue()
 # JavaScriptで、ページ内のすべての画像が読み込まれたかどうかを判定する関数を定義する
 JavaScriptIsLoadedImagesDefine: str = " \
 window.isLoadedAllImages = () => { \
-  const images = document.getElementsByTagName('article')[0].getElementsByTagName("img"); \
+  const images = document.getElementsByTagName('article')[0].getElementsByTagName('img'); \
   let completed = true; \
   for (const image of images) { \
     if (image.complete === false) { \
@@ -104,4 +104,4 @@ async def get_tweet_image() -> None:
         else:
             await message.add_files(file)
 
-bot.run('Njk0MTE1MzY2NDA5ODYzMTc4.GxrjhS.-NebH8K3i4FZGDEtdw9rVK2IR8krev-VUMlkrw')
+bot.run('MTE2ODYwMDE4MTQ0NTUwOTE2MA.GLmMbm.U4GVb3o2BB_RFxJ8BFDcngWZIIP1Tx9tmyjBSQ')
