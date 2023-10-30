@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -63,10 +64,11 @@ async def isLoadedAllImages(driver: webdriver.Chrome, timeOut: int = 300, interv
   return completed
 
 async def get_tweet_image() -> None:
+    service = Service()
     options: webdriver.FirefoxOptions = webdriver.ChromeOptions()
     options.headless = True
 
-    driver: webdriver.Firefox = webdriver.Chrome(options=options)
+    driver: webdriver.Chrome = webdriver.Chrome(service=service, options=options)
 
     wait: WebDriverWait = WebDriverWait(driver, 10)  # wait up to 10 seconds for elements to appear
 
