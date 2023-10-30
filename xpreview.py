@@ -7,7 +7,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from PIL import Image
 from io import BytesIO
-import chromedriver_binary
 import re
 import asyncio
 import time
@@ -65,7 +64,7 @@ async def isLoadedAllImages(driver: webdriver.Chrome, timeOut: int = 300, interv
   return completed
 
 async def get_tweet_image() -> None:
-    service = Service()
+    service = Service(executable_path=r'./chromedriver-linux64/chromedriver')
     options: webdriver.FirefoxOptions = webdriver.ChromeOptions()
     options.add_argument('--headless')
     options.add_argument('--no-sandbox')
