@@ -7,6 +7,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from PIL import Image
 from io import BytesIO
+import threading
 import re
 import asyncio
 import time
@@ -36,7 +37,9 @@ JavaScriptIsLoadedImagesCall: str = "return isLoadedAllImages();"
 @bot.event
 async def on_ready() -> None:
     print(f'{bot.user.name} has connected to Discord!')
-    bot.loop.create_task(get_tweet_image())
+    new_loop = asyncio.new_event_loop()
+    t = threading.Thread(target=start_get_tweet_image_loop, args=(new_loop,))
+    t.start()
 
 @bot.event
 async def on_message(message: discord.Message) -> None:
@@ -62,6 +65,10 @@ async def isLoadedAllImages(driver: webdriver.Chrome, timeOut: int = 300, interv
     completed = driver.execute_script(JavaScriptIsLoadedImagesCall)
     await asyncio.sleep(interval)
   return completed
+
+def start_get_tweet_image_loop(loop):
+    asyncio.set_event_loop(loop)
+    loop.run_until_complete(get_tweet_image())
 
 async def get_tweet_image() -> None:
     service = Service('./chromedriver-linux64/chromedriver')
