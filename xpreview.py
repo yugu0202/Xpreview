@@ -1,11 +1,9 @@
 from typing import Optional, Any
 import discord
-from discord.emoji import Emoji
 from discord.ext import commands
 from discord.enums import ButtonStyle
 from discord.interactions import Interaction
-from discord.partial_emoji import PartialEmoji
-from discord.ui import Button, View, Select
+from discord.ui import Button, View
 
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -154,9 +152,6 @@ async def get_tweet_image() -> None:
                 fp=image_binary, filename='tweet.png')
 
         # メッセージにスクリーンショットを添付する
-        if not message.attachments:
-            await message.edit(content=None, attachments=[file])
-        else:
-            await message.add_files(file)
+        await message.edit(content=None, attachments=[file], view=None)
 
 bot.run('MTE2ODYwMDE4MTQ0NTUwOTE2MA.GLmMbm.U4GVb3o2BB_RFxJ8BFDcngWZIIP1Tx9tmyjBSQ')
