@@ -43,7 +43,7 @@ class RetryAnalysisView(View):
         self.add_item(self.retry_button)
 
     async def retry(self, interaction: Interaction) -> None:
-        await interaction.response.edit_message(content="取得中...")
+        await interaction.response.edit_message(content="取得中...", view=None)
         await analysis_queue.put([self.url, interaction.channel.id, interaction.message.id])
 
 
@@ -152,6 +152,6 @@ async def get_tweet_image() -> None:
                 fp=image_binary, filename='tweet.png')
 
         # メッセージにスクリーンショットを添付する
-        await message.edit(content=None, attachments=[file], view=None)
+        await message.edit(content=None, attachments=[file])
 
 bot.run('MTE2ODYwMDE4MTQ0NTUwOTE2MA.GLmMbm.U4GVb3o2BB_RFxJ8BFDcngWZIIP1Tx9tmyjBSQ')
