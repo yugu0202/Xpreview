@@ -1,4 +1,5 @@
-from typing import Optional, Any
+from typing import Optional, Any, List
+
 import discord
 from discord.ext import commands
 from discord.enums import ButtonStyle
@@ -16,7 +17,9 @@ from io import BytesIO
 import re
 import asyncio
 import time
-
+import os
+from os.path import join, dirname
+from dotenv import load_dotenv
 
 class RetryButton(Button):
     def __init__(self, *, style: ButtonStyle = ButtonStyle.primary, label: Optional[str] = None, disabled: bool = False, custom_id: Optional[str] = None, row: Optional[int] = None, func: Any = None) -> None:
@@ -46,6 +49,9 @@ class RetryAnalysisView(View):
         await interaction.response.edit_message(content="取得中...", view=None)
         await analysis_queue.put([self.url, interaction.channel.id, interaction.message.id])
 
+load_dotenv(verbose=True)
+dotenv_path = join(dirname(__file__), '.env')
+load_dotenv(dotenv_path)
 
 intents = discord.Intents.all()
 bot: commands.Bot = commands.Bot(command_prefix='!', intents=intents)
@@ -154,4 +160,4 @@ async def get_tweet_image() -> None:
         # メッセージにスクリーンショットを添付する
         await message.edit(content=None, attachments=[file])
 
-bot.run('MTE2ODYwMDE4MTQ0NTUwOTE2MA.GLmMbm.U4GVb3o2BB_RFxJ8BFDcngWZIIP1Tx9tmyjBSQ')
+bot.run(os.environ['DISCORD_TOKEN'])
