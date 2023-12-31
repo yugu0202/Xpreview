@@ -6,7 +6,7 @@ from discord.enums import ButtonStyle
 from discord.interactions import Interaction
 from discord.ui import Button, View
 
-from selenium import webdriver
+from selenium.webdriver import Chrome, ChromeOptions
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -17,6 +17,7 @@ from io import BytesIO
 import re
 import asyncio
 import time
+import sqlite3
 import os
 from os.path import join, dirname
 from dotenv import load_dotenv
@@ -100,7 +101,7 @@ async def on_message(message: discord.Message) -> None:
     await bot.process_commands(message)
 
 
-async def isLoadedAllImages(driver: webdriver.Chrome, timeOut: int = 300, interval: float = 0.1) -> bool:
+async def isLoadedAllImages(driver: Chrome, timeOut: int = 300, interval: float = 0.1) -> bool:
     completed: bool = False
     start: float = time.time()
     while time.time() - start < timeOut and completed == False:
@@ -111,7 +112,7 @@ async def isLoadedAllImages(driver: webdriver.Chrome, timeOut: int = 300, interv
 
 async def get_tweet_image() -> None:
     service = Service('./chromedriver-linux64/chromedriver')
-    options: webdriver.FirefoxOptions = webdriver.ChromeOptions()
+    options: ChromeOptions = ChromeOptions()
     options.add_argument('--headless')
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-gpu')  # 暫定的に必要なフラグとのこと
@@ -120,7 +121,7 @@ async def get_tweet_image() -> None:
     options.add_experimental_option(
         'prefs', {'intl.accept_languages': 'ja,jp'})
 
-    driver: webdriver.Chrome = webdriver.Chrome(
+    driver: Chrome = Chrome(
         service=service, options=options)
 
     # wait up to 10 seconds for elements to appear
