@@ -3,3 +3,4 @@ poetry.toml
 .vscode/
 poetry.lock
 .env
+chromedriver*
